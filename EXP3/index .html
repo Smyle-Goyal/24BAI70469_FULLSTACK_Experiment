@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard</title>
+
+<style>
+:root{
+    --bg: #0a0f1c;
+    --card: rgba(255,255,255,0.05);
+    --text: white;
+    --border: rgba(255,255,255,0.15);
+}
+
+.light{
+    --bg: #f5f5f5;
+    --card: white;
+    --text: #111;
+    --border: #ccc;
+}
+
+body{
+    margin:0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Grid Layout */
+.dashboard{
+    display:grid;
+    grid-template-areas:
+        "header header"
+        "nav main";
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 80px 1fr;
+    height:100vh;
+}
+
+/* Header */
+header{
+    grid-area: header;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px;
+    font-size:24px;
+    background: linear-gradient(45deg,#0b132b,#1c2541);
+}
+
+.toggle{
+    padding:10px 20px;
+    border-radius:10px;
+    border:1px solid var(--border);
+    cursor:pointer;
+}
+
+/* Sidebar */
+nav{
+    grid-area: nav;
+    padding:20px;
+}
+
+.sidebar{
+    background: var(--card);
+    height:100%;
+    border-radius:12px;
+    padding:20px;
+    border:1px solid var(--border);
+}
+
+/* Main Area */
+main{
+    grid-area: main;
+    padding:20px;
+    display:grid;
+    grid-template-columns: repeat(3,1fr);
+    gap:20px;
+}
+
+.card{
+    background: var(--card);
+    border-radius:12px;
+    padding:40px;
+    text-align:center;
+    font-size:28px;
+    border:1px solid var(--border);
+}
+
+/* Mobile */
+@media(max-width:800px){
+    .dashboard{
+        grid-template-areas:
+        "header"
+        "main";
+        grid-template-columns:1fr;
+    }
+    nav{
+        display:none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <header>
+        Admin Dashboard
+        <div class="toggle" onclick="toggleTheme()">🌞 Light Mode</div>
+    </header>
+
+    <nav>
+        <div class="sidebar">
+            <h2>Navigation</h2>
+            <p>Dashboard</p>
+            <p>Reports</p>
+            <p>Settings</p>
+        </div>
+    </nav>
+
+    <main>
+        <div class="card">Analytics</div>
+        <div class="card">Users</div>
+        <div class="card">Settings</div>
+    </main>
+
+</div>
+
+<script>
+const body = document.body;
+const btn = document.querySelector(".toggle");
+
+if(localStorage.getItem("theme") === "light"){
+    body.classList.add("light");
+    btn.innerHTML = "🌙 Dark Mode";
+}
+
+function toggleTheme(){
+    body.classList.toggle("light");
+
+    if(body.classList.contains("light")){
+        localStorage.setItem("theme","light");
+        btn.innerHTML = "🌙 Dark Mode";
+    }else{
+        localStorage.setItem("theme","dark");
+        btn.innerHTML = "🌞 Light Mode";
+    }
+}
+</script>
+
+</body>
+</html>
